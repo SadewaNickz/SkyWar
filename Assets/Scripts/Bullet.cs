@@ -2,29 +2,29 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 10f; // Kecepatan laju peluru
+    public float speed = 10f; 
 
     void Update()
     {
-        // Peluru terus bergerak lurus ke atas (Sumbu Y positif)
+        // Arah Peluru
         transform.Translate(Vector3.up * speed * Time.deltaTime);
 
-        // Hancurkan peluru jika sudah keluar layar (misal Y > 10) 
-        // Ini sangat penting agar memori RAM tidak penuh oleh peluru yang terbang tanpa batas
+        // Destroy bullet object
         if (transform.position.x > 15f)
         {
             Destroy(gameObject);
         }
     }
 
-    // Fungsi ini dipanggil otomatis saat peluru menyentuh objek lain (yang Is Trigger-nya aktif)
+    // Peluru ketika terkena objek
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Nanti kita beri tag "Enemy" pada pesawat musuh
         if (collision.CompareTag("Enemy")) 
         {
-            Destroy(collision.gameObject); // Hancurkan musuhnya
-            Destroy(gameObject);           // Hancurkan peluru ini
+            GameManager.instance.AddScore(10);
+            
+            Destroy(collision.gameObject); 
+            Destroy(gameObject);
         }
     }
 }

@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
         // Bergerak lurus ke arah kiri layar
         transform.Translate(Vector3.left * speed * Time.deltaTime, Space.World);
 
-        // Hancurkan musuh jika terlewat sampai ujung kiri luar layar (memori aman)
         if (transform.position.x < -15f)
         {
             Destroy(gameObject);
@@ -20,7 +19,9 @@ public class Enemy : MonoBehaviour
     {
         // Jika menabrak Base
         if (collision.CompareTag("Base"))
-        {
+        {   
+            GameManager.instance.TakeDamage(1);
+
             Debug.Log("Base Tertabrak! Nyawa berkurang.");
             Destroy(gameObject);
         }
