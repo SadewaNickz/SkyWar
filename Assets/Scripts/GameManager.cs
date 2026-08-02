@@ -16,10 +16,13 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI scoreText;   
     public TextMeshProUGUI healthText;  
 
+    public GameObject gameOverPanel;
+
     private void Awake()
     {
         // Setup Singleton
         if (instance == null) instance = this;
+        Time.timeScale = 1f;
     }
 
     public void AddScore(int points)
@@ -41,7 +44,15 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("GAME OVER! Mengulang permainan...");
+        if (gameOverPanel != null) gameOverPanel.SetActive(true);
+        
+        // Menghentikan waktu (pesawat, peluru, dan musuh akan berhenti bergerak)
+        Time.timeScale = 0f;
+    }
+
+    public void RestartGame()
+    {
+        // Mengulang scene saat ini
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
