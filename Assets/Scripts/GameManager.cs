@@ -23,6 +23,11 @@ public class GameManager : MonoBehaviour
     public GameObject pausePanel;
     public GameObject playerPlane;
 
+    [Header("Elemen Gameplay (Disembunyikan di Menu)")]
+    public GameObject baseObject;
+    public GameObject pauseButton;
+    public GameObject enemySpawner;
+
     private void Start()
     {
         // Kondisi awal saat game dibuka: Munculkan Main Menu
@@ -38,7 +43,13 @@ public class GameManager : MonoBehaviour
 
         mainMenuPanel.SetActive(false);
         pausePanel.SetActive(false);
-        playerPlane.SetActive(true); // Tampilkan pesawat
+
+        playerPlane.SetActive(true); 
+        if (baseObject != null) baseObject.SetActive(true);
+        if (pauseButton != null) pauseButton.SetActive(true);
+        if (scoreText != null) scoreText.gameObject.SetActive(true);
+        if (healthText != null) healthText.gameObject.SetActive(true);
+        if (enemySpawner != null) enemySpawner.SetActive(true);
         Time.timeScale = 1f; // Jalankan waktu
     }
 
@@ -60,7 +71,12 @@ public class GameManager : MonoBehaviour
         pausePanel.SetActive(false);
         if (gameOverPanel != null) gameOverPanel.SetActive(false);
         
-        playerPlane.SetActive(false); // Sembunyikan pesawat
+        playerPlane.SetActive(false); 
+        if (baseObject != null) baseObject.SetActive(false);
+        if (pauseButton != null) pauseButton.SetActive(false);
+        if (scoreText != null) scoreText.gameObject.SetActive(false);
+        if (healthText != null) healthText.gameObject.SetActive(false);
+        if (enemySpawner != null) enemySpawner.SetActive(false);
         Time.timeScale = 0f; // Hentikan permainan latar belakang
     }
 
