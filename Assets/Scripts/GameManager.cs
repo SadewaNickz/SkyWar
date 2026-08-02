@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
         if (scoreText != null) scoreText.gameObject.SetActive(true);
         if (healthText != null) healthText.gameObject.SetActive(true);
         if (enemySpawner != null) enemySpawner.SetActive(true);
+
+        CleanupScene();
+
         Time.timeScale = 1f; // Jalankan waktu
     }
 
@@ -77,6 +80,9 @@ public class GameManager : MonoBehaviour
         if (scoreText != null) scoreText.gameObject.SetActive(false);
         if (healthText != null) healthText.gameObject.SetActive(false);
         if (enemySpawner != null) enemySpawner.SetActive(false);
+
+        CleanupScene();
+
         Time.timeScale = 0f; // Hentikan permainan latar belakang
     }
 
@@ -122,5 +128,20 @@ public class GameManager : MonoBehaviour
     {
         // Mengulang scene saat ini
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void CleanupScene()
+    {
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        foreach (Enemy enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+
+        Bullet[] bullets = FindObjectsOfType<Bullet>();
+        foreach (Bullet bullet in bullets)
+        {
+            Destroy(bullet.gameObject);
+        }
     }
 }
