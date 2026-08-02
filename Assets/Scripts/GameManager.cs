@@ -18,6 +18,58 @@ public class GameManager : MonoBehaviour
 
     public GameObject gameOverPanel;
 
+    [Header("Menu Utama & Pause")]
+    public GameObject mainMenuPanel;
+    public GameObject pausePanel;
+    public GameObject playerPlane;
+
+    private void Start()
+    {
+        // Kondisi awal saat game dibuka: Munculkan Main Menu
+        ReturnToMenu(); 
+    }
+    public void StartGame()
+    {
+        // Reset skor dan nyawa jika diperlukan
+        score = 0;
+        baseHealth = 3;
+        if (scoreText != null) scoreText.text = "Skor: 0";
+        if (healthText != null) healthText.text = "Nyawa: 3";
+
+        mainMenuPanel.SetActive(false);
+        pausePanel.SetActive(false);
+        playerPlane.SetActive(true); // Tampilkan pesawat
+        Time.timeScale = 1f; // Jalankan waktu
+    }
+
+    public void PauseGame()
+    {
+        pausePanel.SetActive(true);
+        Time.timeScale = 0f; // Hentikan waktu
+    }
+
+    public void ResumeGame()
+    {
+        pausePanel.SetActive(false);
+        Time.timeScale = 1f; // Lanjutkan waktu
+    }
+
+    public void ReturnToMenu()
+    {
+        mainMenuPanel.SetActive(true);
+        pausePanel.SetActive(false);
+        if (gameOverPanel != null) gameOverPanel.SetActive(false);
+        
+        playerPlane.SetActive(false); // Sembunyikan pesawat
+        Time.timeScale = 0f; // Hentikan permainan latar belakang
+    }
+
+    public void QuitGame()
+    {
+        Debug.Log("Keluar dari Game!");
+        Application.Quit();
+    }
+    
     private void Awake()
     {
         // Setup Singleton

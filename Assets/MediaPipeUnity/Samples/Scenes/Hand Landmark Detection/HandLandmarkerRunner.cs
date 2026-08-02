@@ -21,6 +21,8 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
 
     [Header("Hubungan ke Pemain")]
     public PlayerController playerController;
+    public UIHandController uiHandController;
+    private Vector2 lastMiddlePos;
     private Vector2 lastIndexPos;
     private Vector2 lastThumbPos;
     private bool hasHandData = false;
@@ -34,11 +36,20 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
 
     private void Update()
     {
-        // Mengeksekusi pergerakan pesawat di Main Thread Unity
-        if (hasHandData && playerController != null)
+        if (hasHandData)
         {
-            playerController.UpdateHandTracking(lastIndexPos, lastThumbPos);
-            hasHandData = false; // Reset setelah dikirim
+            // Kirim data ke pesawat (jika pesawat sedang aktif)
+            if (playerController != null && playerController.gameObject.activeInHierarchy)
+            {
+                playerController.UpdateHandTracking(lastIndexPos, lastThumbPos);
+            }
+
+            // Kirim data ke UI Kursor (selalu aktif)
+            if (uiHandController != null)
+            {
+                uiHandController.UpdateHandUI(lastMiddlePos, lastThumbPos);
+            }
+            hasHandData = false;
         }
     }
 
@@ -180,6 +191,7 @@ namespace Mediapipe.Unity.Sample.HandLandmarkDetection
           // Mengambil Titik 8 (Ujung Telunjuk) dan Titik 4 (Ujung Jempol)
           lastIndexPos = new Vector2(hand.landmarks[8].x, hand.landmarks[8].y);
           lastThumbPos = new Vector2(hand.landmarks[4].x, hand.landmarks[4].y);
+          lastMiddlePos = new Vector2(hand.landmarks[12].x, hand.landmarks[12].y);
           
           hasHandData = true; // Beri sinyal ke fungsi Update() bahwa ada data baru
       }
