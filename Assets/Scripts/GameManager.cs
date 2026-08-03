@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     public GameObject baseObject;
     public GameObject pauseButton;
     public GameObject enemySpawner;
+    public GameObject gambarScore;
+    public GameObject gambarHealth;
 
     private void Start()
     {
@@ -50,6 +52,8 @@ public class GameManager : MonoBehaviour
         if (scoreText != null) scoreText.gameObject.SetActive(true);
         if (healthText != null) healthText.gameObject.SetActive(true);
         if (enemySpawner != null) enemySpawner.SetActive(true);
+        if (gambarHealth != null) gambarHealth.SetActive(true);
+        if (gambarScore != null)gambarScore.SetActive(true);
 
         CleanupScene();
 
@@ -80,6 +84,8 @@ public class GameManager : MonoBehaviour
         if (scoreText != null) scoreText.gameObject.SetActive(false);
         if (healthText != null) healthText.gameObject.SetActive(false);
         if (enemySpawner != null) enemySpawner.SetActive(false);
+        if (gambarHealth != null) gambarHealth.SetActive(false);
+        if (gambarScore != null)gambarScore.SetActive(false);
 
         CleanupScene();
 
@@ -119,7 +125,7 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         if (gameOverPanel != null) gameOverPanel.SetActive(true);
-        
+        if (pauseButton != null) pauseButton.SetActive(false);
         // Menghentikan waktu (pesawat, peluru, dan musuh akan berhenti bergerak)
         Time.timeScale = 0f;
     }
