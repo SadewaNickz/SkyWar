@@ -13,6 +13,10 @@ public class PlayerController : MonoBehaviour
     public float fireRate = 0.3f; // Jeda antar tembakan (detik)
     private float nextFireTime = 0f;
 
+    [Header("Pengaturan Suara")]
+    public AudioSource audioSource;
+    public AudioClip shootSound;
+
     // Fungsi ini yang nanti akan dipanggil secara terus-menerus oleh script MediaPipe
     public void UpdateHandTracking(Vector2 indexTip, Vector2 thumbTip)
     {
@@ -52,6 +56,12 @@ public class PlayerController : MonoBehaviour
         {
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             nextFireTime = Time.time + fireRate;
+
+            if (audioSource != null && shootSound != null)
+            {
+            // Menggunakan PlayOneShot agar suara tembakan bisa bertumpuk jika kamu menembak dengan cepat
+            audioSource.PlayOneShot(shootSound); 
+            }
         }
     }
 }
